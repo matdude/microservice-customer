@@ -1,8 +1,7 @@
 package com.microservice.customer.domain.model;
 
-
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -12,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Customer {
 
     @Id
+    @GeneratedValue
     private Long customerId;
 
     @NotNull
