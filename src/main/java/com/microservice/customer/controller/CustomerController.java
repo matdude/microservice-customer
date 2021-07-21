@@ -1,30 +1,36 @@
 package com.microservice.customer.controller;
 
-import com.microservice.customer.domain.model.Customer;
+import com.microservice.customer.domain.model.CustomerDto;
 import com.microservice.customer.service.CustomerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/customer")
+@RequestMapping("/api/v1/customer")
 @RestController
+@RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping(value = "getCustomers")
-    public List<Customer> getCustomers() {
-        List<Customer> customers = customerService.getCustomers();
+    @GetMapping
+    public List<CustomerDto> getCustomers() {
+        List<CustomerDto> customers = customerService.getCustomers();
         return customers;
     }
 
-    @PostMapping(value = "createCustomer")
-    public void createCustomer(@RequestBody Customer customer) {
-        Customer customer1 = new Customer();
-        customerService.createCustomer(customer1);
+    @GetMapping("/{creditId}")
+    public ResponseEntity<CustomerDto> getCustomers(@PathVariable Long creditId)  {
+         return customerService.getCustomer(creditId)
+                 .map(ResponseEntity::ok)
+                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public CustomerDto createCustomer(@RequestBody @Valid CustomerDto customerDto) {
+        return customerService.createCustomer(customerDto);
     }
 }

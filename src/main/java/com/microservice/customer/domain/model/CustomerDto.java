@@ -1,24 +1,18 @@
 package com.microservice.customer.domain.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "customer")
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class CustomerDto {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     @NotNull
@@ -29,8 +23,4 @@ public class Customer {
 
     @NotNull
     private String surname;
-
-    @NotNull
-    private String pesel;
-
 }
